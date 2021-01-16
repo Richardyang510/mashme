@@ -3,3 +3,4 @@ backend/venv/
 backend/__pycache__/
 *.mp3
 *.wav
+backend/.env

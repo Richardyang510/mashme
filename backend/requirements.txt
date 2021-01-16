@@ -7,3 +7,4 @@ pyrubberband
 numpy
 youtube_dl
 requests
+python-dotenv

@@ -43,6 +43,7 @@ ydl_opts = {
 #
 # this will download the file as {youtube_id}.mp3
 def download(arg):
+    logging.info(f"Downloading {arg}")
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:
             requests.get(arg)
