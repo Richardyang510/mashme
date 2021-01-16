@@ -1,0 +1,132 @@
+@font-face {
+  src: url(fonts/AppleGaramond.ttf);
+  font-family: agaramond;
+}
+
+@font-face {
+  src: url(fonts/AppleGaramond-Bold.ttf);
+  font-family: agaramond-bold;
+}
+
+@font-face {
+  src: url(fonts/AppleGaramond-BoldItalic.ttf);
+  font-family: agaramond-bold-italic;
+}
+
+@font-face {
+  src: url(fonts/AppleGaramond-Italic.ttf);
+  font-family: agaramond-italic;
+}
+
+@font-face {
+  src: url(fonts/AppleGaramond-Light.ttf);
+  font-family: agaramond-light;
+}
+
+@font-face {
+  src: url(fonts/AppleGaramond-LightItalic.ttf);
+  font-family: agaramond-light-italic;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  color: transparent;
+  background-color: transparent;
+  max-width: 1250px;
+}
+
+#menu
+{
+  border-radius: 999px;
+  background-color: #FFFFFF;
+}
+
+.container {
+  max-width: 1000px;
+}
+/*
+.my-container {
+  border: 1px solid green;
+}
+
+.my-row {
+  border: 3px solid red;
+}
+
+.my-col {
+  border: 3px dotted blue;
+}
+*/
+#main-title {
+  font-family: agaramond-bold;
+  font-size: 80px;
+  line-height: 1.2;
+  padding-top: 110px;
+  padding-bottom: 40px;
+}
+
+#floppy-menu-projects-row {
+  padding-top: 30px;
+}
+
+.floppy-menu-icon{
+  max-height: 85px;
+}
+
+.floppy-text {
+  font-family: agaramond;
+  font-size: 45px;
+}
+
+.floppy-row {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+a:hover {
+  text-decoration-line: none;
+}
+
+.section-title {
+  font-family: agaramond-bold;
+  font-size: 80px;
+  line-height: 1.2;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.project-image {
+
+}
+
+.project-column {
+  margin-left: 20px;
+}
+
+.project-subtitle {
+  font-family: agaramond-bold;
+  font-size: 24px;
+}
+
+#projects-mac-image {
+  max-height: 150px;
+}
+
+.about-section-image {
+
+}
+
+.about-section-caption {
+  font-size: 13px;
+  color: #808080
+}
+
+#spotify-caption {
+  font-style: italic;
+}
+.my-button {
+  margin-bottom: 7px;
+}
