@@ -5,3 +5,5 @@ simpleaudio
 soundfile
 pyrubberband
 numpy
+youtube_dl
+requests
