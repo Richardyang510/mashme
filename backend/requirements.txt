@@ -8,3 +8,5 @@ numpy
 youtube_dl
 requests
 python-dotenv
+wheel
+mysql-connector-python

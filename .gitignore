@@ -4,3 +4,4 @@ backend/__pycache__/
 *.mp3
 *.wav
 backend/.env
+backend/gcp_secret.json

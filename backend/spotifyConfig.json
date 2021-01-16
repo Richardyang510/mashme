@@ -1,5 +1,0 @@
-{
-    "AUDIO_FEATURES_URL": "https://api.spotify.com/v1/audio-features",
-    "SEARCH_URL": "https://api.spotify.com/v1/search",
-    "AUTH_TOKEN": "of course I am not gonna tell you"
-}
