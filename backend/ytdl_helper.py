@@ -40,6 +40,8 @@ ydl_opts = {
 
 # either specify search phrase download("santana smooth lyrics")
 # or the youtube url download("https://www.youtube.com/watch?v=????")
+#
+# this will download the file as {youtube_id}.mp3
 def download(arg):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:
