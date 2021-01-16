@@ -1,1 +1,9 @@
 flask
+pydub
+ffmpeg
+simpleaudio
+soundfile
+pyrubberband
+numpy
+youtube_dl
+requests
