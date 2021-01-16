@@ -25,7 +25,7 @@ body {
 .container {
   max-width: 1000px;
 }
-
+/*
 .my-container {
   border: 1px solid green;
 }
@@ -37,7 +37,7 @@ body {
 .my-col {
   border: 3px dotted blue;
 }
-
+*/
 #title-row {
   padding-top: 270px;
 }
@@ -91,6 +91,10 @@ a:hover {
   transition: 0.4s;
   line-height: 40px;
   width: 420px;
+}
+
+#search-row-2 {
+  margin-top:7px;
 }
 
 .mood-button {

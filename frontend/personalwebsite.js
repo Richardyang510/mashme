@@ -1,8 +1,11 @@
 
+/*
+
 document.querySelectorAll(".floppy-all").forEach((link) =>{
   link.addEventListener("mouseover", () =>{
     console.log("mouse is over link");
       /*3px border */
+/*
       if (link.classList.contains("floppy-projects")) {
           document.querySelector("#dittoMac").src = "pngs/macintosh128khardhat.png"
       }
@@ -23,7 +26,7 @@ document.querySelectorAll(".floppy-all").forEach((link) =>{
 })
 
 console.log("this is working");
-/*
+
 function mouseoverImage() {
     document.getElementById("dittoMac").src ="pngs/macintosh128kspotify.png"
 }
@@ -31,8 +34,8 @@ function mouseoverImage() {
 function mouseoutImage() {
   document.getElementById("dittoMac").src ="pngs/macintosh128kditto.png"
 }
-*/
-/*
+
+
 random code i made to check if event listener could be added to smth else
 window.onload=function(){
 var item = document.getElementById("dittoMac");
