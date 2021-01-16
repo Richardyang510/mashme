@@ -1,4 +1,6 @@
 from pydub import AudioSegment
+import wave
+import contextlib
 import soundfile as sf
 import pyrubberband as pyrb
 import logging
@@ -75,3 +77,10 @@ def transform(filename, old_bpm, new_bpm, old_key, new_key, old_key_minor=False,
     f_tempo_key = change_key(f_tempo, old_key, new_key, old_key_minor, new_key_minor)
     dump_wav(f_tempo_key)
 
+
+def get_wav_duration(filename):
+    with contextlib.closing(wave.open(f"{filename}.wav", 'r')) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        length = frames / float(rate)
+        return length

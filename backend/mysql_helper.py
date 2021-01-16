@@ -38,6 +38,7 @@ create table STEMS (
     STEM_TYPE NVARCHAR(10),
     STEM_TEMPO FLOAT,
     STEM_KEY INT,
+    STEM_DURATION FLOAT,
     BUCKET_NAME NVARCHAR(256),
     FILE_NAME NVARCHAR(256),
     FOREIGN KEY (YOUTUBE_ID) REFERENCES SONGS(YOUTUBE_ID)
@@ -101,20 +102,20 @@ def insert_song(youtube_id, spotify_id, track_name, track_artist, tempo, song_ke
     db.commit()
 
 
-def insert_stems(youtube_id, bucket_name, stem_map, stem_tempo, stem_key):
+def insert_stems(youtube_id, bucket_name, stem_map, stem_tempo, stem_key, stem_duration):
     test_connection()
     db_cursor = db.cursor()
 
     num_stems = len(stem_map)
 
     sql = f"INSERT INTO {STEMS_TABLE} " \
-          "(created_time, youtube_id, stem_type, stem_tempo, stem_key, bucket_name, file_name) " \
-          "VALUES " + ("(current_timestamp, %s, %s, %s, %s, %s, %s)," * num_stems)[:-1]
+          "(created_time, youtube_id, stem_type, stem_tempo, stem_key, stem_duration, bucket_name, file_name) " \
+          "VALUES " + ("(current_timestamp, %s, %s, %s, %s, %s, %s, %s)," * num_stems)[:-1]
 
     val_list = []
 
     for stem_type, file_name in stem_map:
-        val_list.append([youtube_id, stem_type, stem_tempo, stem_key, bucket_name, file_name])
+        val_list.append([youtube_id, stem_type, stem_tempo, stem_key, stem_duration, bucket_name, file_name])
 
     val = tuple(val_list)
     logging.info(val)
@@ -122,3 +123,17 @@ def insert_stems(youtube_id, bucket_name, stem_map, stem_tempo, stem_key):
     db_cursor.execute(sql, val)
     db.commit()
 
+
+def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_key, stem_duration):
+    test_connection()
+    db_cursor = db.cursor()
+
+    sql = f"INSERT INTO {STEMS_TABLE} " \
+          "(created_time, youtube_id, stem_type, stem_tempo, stem_key, stem_duration, bucket_name, file_name) " \
+          "VALUES (current_timestamp, %s, %s, %s, %s, %s, %s, %s)"
+
+    val = (youtube_id, stem_type, stem_tempo, stem_key, stem_duration, bucket_name, file_name)
+    logging.info(val)
+
+    db_cursor.execute(sql, val)
+    db.commit()
