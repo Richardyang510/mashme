@@ -1,23 +1,31 @@
 import requests
-import json
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
-with open('spotifyConfig.json') as f:
-    config = json.load(f)
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+AUDIO_FEATURES_URL = "https://api.spotify.com/v1/audio-features"
+SEARCH_URL = "https://api.spotify.com/v1/search"
+
+SPOTIFY_AUTH_TOKEN = os.environ.get("SPOTIFY_AUTH_TOKEN")
+
 
 class SpotifyHelper:
-    HEADER = {"Authorization": "Bearer " + config["AUTH_TOKEN"]}
+    HEADER = {"Authorization": "Bearer " + SPOTIFY_AUTH_TOKEN}
 
     @staticmethod
     def getSongId(name, artist):
-        '''
+        """
         Gets the id of the first song that matches the search criteria
-        '''
-        r = requests.get(config["SEARCH_URL"], params={'q': name + ' artist:' + artist, 'type': 'track'}, headers=SpotifyHelper.HEADER)
+        """
+        r = requests.get(SEARCH_URL, params={'q': name + ' artist:' + artist, 'type': 'track'}, headers=SpotifyHelper.HEADER)
         return r.json()['tracks']['items'][0]['id']
 
     @staticmethod
     def getAudioFeaturesByIds(ids):
-        '''
+        """
         Gets the audio features of the songs corresponding to the parameter ids
         A sample feature object looks like this:
         {
@@ -40,10 +48,9 @@ class SpotifyHelper:
             "duration_ms": 535223,
             "time_signature": 4
         }
-        '''
-        r = requests.get(config["AUDIO_FEATURES_URL"], params={'ids': ','.join(ids)}, headers=SpotifyHelper.HEADER)
+        """
+        r = requests.get(AUDIO_FEATURES_URL, params={'ids': ','.join(ids)}, headers=SpotifyHelper.HEADER)
         return r.json()['audio_features']
-
 
 
 def sampleUsage():
@@ -56,5 +63,6 @@ def sampleUsage():
     ids = [SpotifyHelper.getSongId(song[0], song[1]) for song in songList]
     features = SpotifyHelper.getAudioFeaturesByIds(ids)
     return features
+
 
 print(sampleUsage())
