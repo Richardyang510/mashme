@@ -14,6 +14,9 @@
     <!-- JavaScript file -->
     <script type="text/javascript" src="personalwebsite.js" defer></script>
 
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/e37068ebea.js" crossorigin="anonymous"></script>
+
     <link rel="icon" href="pngs/haikyuu.png">
     <title>Mo Abidi</title>
   </head>
@@ -50,39 +53,19 @@
           </div>
         </div>
         <div class="row my-row">
-          <div class="col-md-5 my-col mx-auto">
-            <img src="pngs/macintosh128kditto.png" class="img-fluid" alt="Ditto!" id="dittoMac">
+          <div class="col my-col">
+            <div class="search-box d-block mx-auto">
+              <input type="text" name="" class="search-txt">
+              <a href="#" class="search-btn"> <i class="far fa-smile"></i></a>
+            </div>
           </div>
-          <div class="col-md-5 my-col mx-auto">
-            <div class="row my-row floppy-row" id="floppy-menu-projects-row">
-              <div class="col-3 my-col">
-                <a href="#projects-container">
-                  <img src="pngs/floppy_projects.png" class="img-fluid floppy-menu-icon floppy-projects floppy-all" alt="Projects">
-                </a>
-              </div>
-              <div class="col my-col">
-                  <p class="floppy-text"><a class="text-secondary floppy-projects floppy-all" href="#projects-container">Projects</a></p>
-              </div>
-            </div>
-            <div class="row my-row floppy-row">
-              <div class="col-3 my-col">
-                <a href="#about-container">
-                  <img src="pngs/floppy_about.png" class="img-fluid floppy-menu-icon floppy-about floppy-all" alt="About">
-                </a>
-              </div>
-              <div class="col my-col">
-                  <p class="floppy-text"><a class="text-secondary floppy-about floppy-all" href="#about-container">About</a></p>
-              </div>
-            </div>
-            <div class="row my-row floppy-row">
-              <div class="col-3 my-col">
-                <a href="temp-resume.pdf" target="_blank">
-                  <img src="pngs/floppy_resume.png" class="img-fluid floppy-menu-icon floppy-resume floppy-all" alt="Resume">
-                </a>
-              </div>
-              <div class="col my-col">
-                  <p class="floppy-text"><a class="text-secondary floppy-resume floppy-all" href="temp-resume.pdf" target="_blank">Resume</a></p>
-              </div>
+        </div>
+        <div class="row my-row" id="mood-row">
+          <div class="col my-col">
+            <div class="col-md-4 offset-md-4 my-col">
+              <span>i'm feeling kinda &nbsp;&nbsp;</span>
+              <button type="button" class="btn btn-primary mood-button" data-bs-toggle="button" autocomplete="off">happy</button>
+              <button type="button" class="btn btn-primary mood-button" data-bs-toggle="button" autocomplete="off">sadge</button>
             </div>
           </div>
         </div>
