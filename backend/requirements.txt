@@ -11,3 +11,5 @@ python-dotenv
 wheel
 mysql-connector-python
 spleeter
+google-cloud-storage
+tensorflow
