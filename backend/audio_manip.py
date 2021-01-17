@@ -75,7 +75,7 @@ def change_key(filename, old_key, new_key, old_key_minor=False, new_key_minor=Fa
 def transform(filename, old_bpm, new_bpm, old_key, new_key, old_key_minor=False, new_key_minor=False):
     f_tempo = change_tempo(filename, old_bpm, new_bpm)
     f_tempo_key = change_key(f_tempo, old_key, new_key, old_key_minor, new_key_minor)
-    dump_wav(f_tempo_key)
+    return dump_wav(f_tempo_key)
 
 
 def get_wav_duration(filename):

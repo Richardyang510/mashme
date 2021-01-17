@@ -47,9 +47,11 @@ def download(arg):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:
             requests.get(arg)
-        except requests.exceptions:
-            video = ydl.extract_info(f"ytsearch:{arg}", download=True)['entries'][0]["webpage_url"]
+        except requests.exceptions.MissingSchema:
+            metadata = ydl.extract_info(f"ytsearch:{arg}", download=True)['entries'][0]
+            return {"id": metadata["id"], "artist": metadata["artist"], "track": metadata["track"]}
         else:
-            video = ydl.extract_info(arg, download=True)
+            logging.error("Operation not supported")
+            return None
+            #  youtube_id = ydl.extract_info(arg, download=True)
 
-    return video
