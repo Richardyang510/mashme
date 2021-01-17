@@ -45,3 +45,14 @@ function func() {
   }
 }
 */
+
+//document.getElementById("two-songs")
+
+function toggleSearchRow() {
+  x = document.getElementById("search-row-2");
+  if (x.style.display === "none") {
+    x.style.display = "block"
+  } else {
+    x.style.display = "none"
+  }
+}
