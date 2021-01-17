@@ -15,7 +15,7 @@ def minor_to_major_pitch_class(minor_key):
 # converts "{filename}.wav" to "{filename}.mp3"
 def dump_wav(filename):
     logging.info(f"Converting {filename} to mp3")
-    AudioSegment.from_wav(f"{filename}.wav").export(f"{filename}.mp3", format="mp3")
+    AudioSegment.from_wav(f"{filename}.wav").export(f"{filename}.mp3", format="mp3", bitrate="96k")
 
     return f"{filename}.mp3"
 
