@@ -97,8 +97,8 @@ def download_song(search_query):
 
     for file in only_files:
         stem_type = file.split(".")[0]
-        mp3_file = audio_manip.dump_wav(file)
-        file_path = stems_path + mp3_file
+        mp3_file = audio_manip.dump_wav(stems_path + stem_type)
+        file_path = mp3_file
         gcp_storage_helper.upload_blob(BUCKET_NAME, file_path, file_path)
         gcp_storage_helper.post_upload(youtube_id, BUCKET_NAME, stem_type, file_path, file_path, tempo, song_key,
                                        yt_metadata["duration"])
