@@ -84,23 +84,14 @@ var muteCounters = [1, 0, 0, 1, 0, 1, 0, 1];
 var num_tracks = 8;
 
 
-VolumeSample.init = function() {
+VolumeSample.init = function(stem_urls) {
   // Fix up prefixing
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   context = new AudioContext();
 
   bufferLoader = new BufferLoader(
     context,
-    [
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fvocals.mp3?alt=media",
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fvocals.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fbass.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fbass.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fdrums.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fdrums.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fother.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fother.mp3?alt=media",
-    ],
+    stem_urls,
     VolumeSample.finishedLoading
     );
 
@@ -142,14 +133,17 @@ VolumeSample.toggleVolume = function(idx) {
 
 function submitQuery(event) {
   event.preventDefault();
+  var url = 'http://34.73.177.14/api/mix/';
   if (document.getElementById("selected-song-id").value !== "") {
-    fetch('http://34.73.177.14/api/mix/' + document.getElementById("selected-song-id").value, {method: 'POST' })
-    .then(response => console.log('mix successful')) 
+    url += document.getElementById("selected-song-id").value;
   } else {
-
-    fetch('http://34.73.177.14/api/mix/' + document.getElementById("myInput").value + ';' + document.getElementById("myInput2").value, {method: 'POST' })
-      .then(response => console.log('mix successful'))
+    url += document.getElementById("myInput").value + ';' + document.getElementById("myInput2").value
   }
+    fetch(url, {method: 'POST' })
+    .then(response => response.json()) 
+    .then(data => {
+      VolumeSample.init(data);
+    })
 }
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
@@ -178,7 +172,8 @@ function autocomplete(inp, arr) {
           b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
           b.innerHTML += arr[i].substr(val.length);
           /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          b.innerHTML += "<input type='hidden' value=\"" + arr[i] + "\">";
+          b.innerHTML += "<input type='hidden' id='bid' value=" + i + ">";
           /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
@@ -186,7 +181,7 @@ function autocomplete(inp, arr) {
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
               var ids = document.getElementById("cached-songs").value.split(',')
-              document.getElementById("selected-song-id").value = ids[i]
+              document.getElementById("selected-song-id").value += ids[parseInt(document.getElementById('bid').value)] + ";"
               closeAllLists();
           });
           a.appendChild(b);
