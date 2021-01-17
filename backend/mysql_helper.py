@@ -19,7 +19,7 @@ SONGS_TABLE = "songs"
 STEMS_TABLE = "stems"
 
 songs_creation_sql = """
-create table SONGS (
+create table songs (
     YOUTUBE_ID NVARCHAR(16) PRIMARY KEY,
     SPOTIFY_ID NVARCHAR(22),
     CREATED_TIME TIMESTAMP(6),
@@ -32,7 +32,7 @@ create table SONGS (
 """
 
 stems_creation_sql = """
-create table STEMS (
+create table stems (
     ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     CREATED_TIME TIMESTAMP(6),
     YOUTUBE_ID NVARCHAR(16),
@@ -42,7 +42,7 @@ create table STEMS (
     STEM_DURATION FLOAT,
     BUCKET_NAME NVARCHAR(256),
     FILE_NAME NVARCHAR(256),
-    FOREIGN KEY (YOUTUBE_ID) REFERENCES SONGS(YOUTUBE_ID)
+    FOREIGN KEY (YOUTUBE_ID) REFERENCES songs(YOUTUBE_ID)
 )
 """
 
@@ -71,6 +71,9 @@ def test_connection():
     if not db.is_connected():
         logging.info("Recreating data base connection")
         db = init_connection()
+    else:
+        db.close()
+        db = init_connection()
 
 
 def create_schemas():
@@ -79,11 +82,13 @@ def create_schemas():
     db_cursor = db.cursor()
     db_cursor.execute(songs_creation_sql)
     db.commit()
+    db_cursor.close()
 
     logging.info("Creating " + stems_creation_sql)
     db_cursor = db.cursor()
     db_cursor.execute(stems_creation_sql)
     db.commit()
+    db_cursor.close()
 
     logging.info("Schemas created")
 
@@ -101,6 +106,7 @@ def insert_song(youtube_id, spotify_id, track_name, track_artist, tempo, song_ke
 
     db_cursor.execute(sql, val)
     db.commit()
+    db_cursor.close()
 
 
 def insert_stems(youtube_id, bucket_name, stem_map, stem_tempo, stem_key, stem_duration):
@@ -123,6 +129,7 @@ def insert_stems(youtube_id, bucket_name, stem_map, stem_tempo, stem_key, stem_d
 
     db_cursor.execute(sql, val)
     db.commit()
+    db_cursor.close()
 
 
 def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_key, stem_duration):
@@ -138,11 +145,12 @@ def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_
 
     db_cursor.execute(sql, val)
     db.commit()
+    db_cursor.close()
 
 
 def fetch_song_list():
     sql = "select distinct youtube_id, track_name, track_artist " \
-          f"from {STEMS_TABLE}" \
+          f"from {SONGS_TABLE}"
 
     test_connection()
     db_cursor = db.cursor()
@@ -150,12 +158,16 @@ def fetch_song_list():
 
     result = db_cursor.fetchall()
 
+    logging.info(sql)
+    logging.info(f"Found {len(result)} songs!")
+
     if len(result) == 0:
         return False, {}
     else:
         data = []
         for youtube_id, track_name, track_artist in result:
             data.append((youtube_id, track_name, track_artist))
+        db_cursor.close()
         return True, data
 
 
@@ -174,6 +186,7 @@ def fetch_song(youtube_id):
         return False, {}
     else:
         for youtube_id, track_name, track_artist, tempo, song_key, is_minor in result:
+            db_cursor.close()
             return True, (youtube_id, track_name, track_artist, tempo, song_key, is_minor)
 
 
@@ -197,4 +210,5 @@ def fetch_stems(youtube_id, tempo, song_key, is_minor):
         data = []
         for youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration in result:
             data.append((youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration))
+        db_cursor.close()
         return True, data
