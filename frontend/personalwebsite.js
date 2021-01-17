@@ -197,3 +197,8 @@ VolumeSample.toggleVolume2 = function(element) {
 	}
 	muteCounter2 += 1;
 }
+
+function submitQuery() {
+  fetch('http://34.73.177.14/api/mix' + document.getElementById("search-bar-1").value, {method: 'POST' })
+    .then(response => console.log('mix successful'))
+}

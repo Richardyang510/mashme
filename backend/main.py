@@ -16,4 +16,14 @@ def smooth_test():
     ]
     return ','.join(urls)
 
+@app.route('/mix/<query>', methods=['POST'])
+def mix(query):
+    print("The user has entered: " + query)
+    return 'hello'
+
+@app.route('/cached-songs')
+def getCachedSongs():
+    pass
+
+
 app.run()
