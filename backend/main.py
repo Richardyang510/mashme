@@ -79,9 +79,9 @@ def download_song(search_query):
     spotify_id = SpotifyHelper.getSongId(yt_metadata["track"], yt_metadata["artist"])
     spotify_features = SpotifyHelper.getAudioFeaturesByIds([spotify_id])
 
-    tempo = spotify_features["tempo"]
-    song_key = spotify_features["key"]
-    is_minor = not bool(spotify_features["mode"])
+    tempo = spotify_features[0]["tempo"]
+    song_key = spotify_features[0]["key"]
+    is_minor = not bool(spotify_features[0]["mode"])
 
     mysql_helper.insert_song(youtube_id, spotify_id, yt_metadata["track"], yt_metadata["artist"],
                              tempo, song_key, is_minor)
@@ -97,8 +97,8 @@ def download_song(search_query):
 
     for file in only_files:
         stem_type = file.split(".")[0]
-        mp3_file = audio_manip.dump_wav(file)
-        file_path = stems_path + mp3_file
+        mp3_file = audio_manip.dump_wav(stems_path + stem_type)
+        file_path = mp3_file
         gcp_storage_helper.upload_blob(BUCKET_NAME, file_path, file_path)
         gcp_storage_helper.post_upload(youtube_id, BUCKET_NAME, stem_type, file_path, file_path, tempo, song_key,
                                        yt_metadata["duration"])
