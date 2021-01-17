@@ -142,8 +142,14 @@ VolumeSample.toggleVolume = function(idx) {
 
 function submitQuery(event) {
   event.preventDefault();
-  fetch('http://34.73.177.14/api/mix/' + document.getElementById("myInput").value + ';' + document.getElementById("myInput2").value, {method: 'POST' })
-    .then(response => console.log('mix successful'))
+  if (document.getElementById("selected-song-id").value !== "") {
+    fetch('http://34.73.177.14/api/mix/' + document.getElementById("selected-song-id").value, {method: 'POST' })
+    .then(response => console.log('mix successful')) 
+  } else {
+
+    fetch('http://34.73.177.14/api/mix/' + document.getElementById("myInput").value + ';' + document.getElementById("myInput2").value, {method: 'POST' })
+      .then(response => console.log('mix successful'))
+  }
 }
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
@@ -179,6 +185,8 @@ function autocomplete(inp, arr) {
               inp.value = this.getElementsByTagName("input")[0].value;
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
+              var ids = document.getElementById("cached-songs").value.split(',')
+              document.getElementById("selected-song-id").value = ids[i]
               closeAllLists();
           });
           a.appendChild(b);

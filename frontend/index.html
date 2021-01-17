@@ -28,10 +28,11 @@
       fetch('http://34.73.177.14/api/cached-songs')
         .then(response => response.json())
         .then(data => {
-          data = data.map(song => song.slice(1).join(', '))
-          document.getElementById("cached-songs").value = data
-          autocomplete(document.getElementById("myInput"), data);
-          autocomplete(document.getElementById("myInput2"), data);
+          var track = data.map(song => song.slice(1).join(', '))
+          var yids = data.map(song => song[0]).join(',')
+          document.getElementById("cached-songs").value = yids
+          autocomplete(document.getElementById("myInput"), track);
+          autocomplete(document.getElementById("myInput2"), track);
         })
     });
     document.addEventListener("DOMContentLoaded", function() {
