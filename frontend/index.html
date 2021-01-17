@@ -23,7 +23,7 @@
     <!-- Hidden fields for storage -->
     <input type="hidden" id="audio-links" value="" />
     <input type="hidden" id="cached-songs" value="" />
-    <script>document.addEventListener('onload', function() {
+    <script>document.addEventListener('DOMContentLoaded', function() {
       fetch('http://34.73.177.14/api/cached-songs')
         .then(response => response.json())
         .then(data => document.getElementById("cached-songs").value = data)
@@ -106,13 +106,13 @@
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox" onchange="VolumeSample.toggleVolume1()" checked="True">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(0)" checked="True">
               <span class="slider round"></span>
             </label>
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox" onchange="VolumeSample.toggleVolume2()" checked="True">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(1)">
               <span class="slider round"></span>
             </label>
           </div>
@@ -123,13 +123,13 @@
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(6)">
               <span class="slider round"></span>
             </label>
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(7)" checked="True">
               <span class="slider round"></span>
             </label>
           </div>
@@ -140,13 +140,13 @@
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(2)">
               <span class="slider round"></span>
             </label>
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(3)" checked="True">
               <span class="slider round"></span>
             </label>
           </div>
@@ -157,13 +157,13 @@
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(4)">
               <span class="slider round"></span>
             </label>
           </div>
           <div class="col-md-2 my-col">
             <label class="switch">
-              <input type="checkbox">
+              <input type="checkbox" onchange="VolumeSample.toggleVolume(5)" checked="True">
               <span class="slider round"></span>
             </label>
           </div>

@@ -10,3 +10,4 @@ requests
 python-dotenv
 wheel
 mysql-connector-python
+spleeter
