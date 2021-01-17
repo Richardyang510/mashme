@@ -250,7 +250,21 @@ input:checked + .slider:before {
   background-color: #7f8fa6;
   border: none;
   margin-top: 10px;
+  border-radius: 999px;
 }
+
+#playback-button-row {
+  margin-left: 100px;
+  margin-top: 20px;
+}
+
+.playback-button {
+  border-radius: 999px;
+  background-color: #7f8fa6;
+  border: none;
+  width: 70px;
+}
+
 
 .feedback-button {
   border-radius: 999px;
