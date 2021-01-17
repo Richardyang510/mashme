@@ -150,7 +150,7 @@ def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_
 
 def fetch_song_list():
     sql = "select distinct youtube_id, track_name, track_artist " \
-          f"from {SONGS_TABLE}" \
+          f"from {SONGS_TABLE}"
 
     test_connection()
     db_cursor = db.cursor()
@@ -158,6 +158,7 @@ def fetch_song_list():
 
     result = db_cursor.fetchall()
 
+    logging.info(sql)
     logging.info(f"Found {len(result)} songs!")
 
     if len(result) == 0:
