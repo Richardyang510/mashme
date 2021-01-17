@@ -139,14 +139,14 @@ VolumeSample.init = function() {
   bufferLoader = new BufferLoader(
     context,
     [
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/vocals.mp3?alt=media",
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/vocals.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/bass.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/bass.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/drums.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/drums.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/other.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/other.mp3?alt=media",
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fvocals.mp3?alt=media",
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fvocals.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fbass.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fbass.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fdrums.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fdrums.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2F2KGe_4leh_Y%2Fother.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output%2Ff4zdkP11BHU%2Fother.mp3?alt=media",
     ],
     VolumeSample.finishedLoading
     );
