@@ -79,11 +79,13 @@ def create_schemas():
     db_cursor = db.cursor()
     db_cursor.execute(songs_creation_sql)
     db.commit()
+    db_cursor.close()
 
     logging.info("Creating " + stems_creation_sql)
     db_cursor = db.cursor()
     db_cursor.execute(stems_creation_sql)
     db.commit()
+    db_cursor.close()
 
     logging.info("Schemas created")
 
@@ -101,6 +103,7 @@ def insert_song(youtube_id, spotify_id, track_name, track_artist, tempo, song_ke
 
     db_cursor.execute(sql, val)
     db.commit()
+    db_cursor.close()
 
 
 def insert_stems(youtube_id, bucket_name, stem_map, stem_tempo, stem_key, stem_duration):
@@ -123,6 +126,7 @@ def insert_stems(youtube_id, bucket_name, stem_map, stem_tempo, stem_key, stem_d
 
     db_cursor.execute(sql, val)
     db.commit()
+    db_cursor.close()
 
 
 def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_key, stem_duration):
@@ -138,6 +142,7 @@ def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_
 
     db_cursor.execute(sql, val)
     db.commit()
+    db_cursor.close()
 
 
 def fetch_song_list():
@@ -158,6 +163,7 @@ def fetch_song_list():
         data = []
         for youtube_id, track_name, track_artist in result:
             data.append((youtube_id, track_name, track_artist))
+        db_cursor.close()
         return True, data
 
 
@@ -176,6 +182,7 @@ def fetch_song(youtube_id):
         return False, {}
     else:
         for youtube_id, track_name, track_artist, tempo, song_key, is_minor in result:
+            db_cursor.close()
             return True, (youtube_id, track_name, track_artist, tempo, song_key, is_minor)
 
 
@@ -199,4 +206,5 @@ def fetch_stems(youtube_id, tempo, song_key, is_minor):
         data = []
         for youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration in result:
             data.append((youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration))
+        db_cursor.close()
         return True, data
