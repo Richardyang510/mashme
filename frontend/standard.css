@@ -118,39 +118,6 @@ a:hover {
 
 /* dropdown CSS end*/
 
-.search-box {
-  background: #f5f6fa;
-  height: 60px;
-  width: 500px;
-  padding: 10px;
-  border-radius: 999px;
-}
-
-.search-btn {
-  color: #e84118;
-  float: right;
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  background: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.search-txt {
-  border: none;
-  background: none;
-  outline: none;
-  float: left;
-  padding: 0;
-  color: #7f8fa6;
-  font-size: 16px;
-  transition: 0.4s;
-  line-height: 40px;
-  width: 420px;
-}
-
 #search-row-2 {
   margin-top:7px;
 }
