@@ -5,3 +5,4 @@ backend/__pycache__/
 *.wav
 backend/.env
 backend/gcp_secret.json
+backend/pretrained_models/

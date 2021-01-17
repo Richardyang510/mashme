@@ -25,11 +25,11 @@ body {
 .container {
   max-width: 1000px;
 }
-
+/*
 .my-container {
   border: none;
 }
-/*
+
 .my-row {
   border: 3px solid red;
 }
@@ -235,21 +235,24 @@ input:checked + .slider:before {
 }
 
 #submit-button {
-  background-color: #7f8fa6;
-  border: none;
-  margin-top: 10px;
   border-radius: 999px;
+  border-width: 1px;
+  border-color: #7f8fa6;
+  background-color: transparent;
+  border-radius: 999px;
+  color: #7f8fa6;
 }
 
 #playback-button-row {
-  margin-left: 100px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .playback-button {
   border-radius: 999px;
-  background-color: #7f8fa6;
-  border: none;
+  border-width: 1px;
+  border-color: #7f8fa6;
+  background-color: transparent;
+  color: #7f8fa6;
   width: 70px;
 }
 

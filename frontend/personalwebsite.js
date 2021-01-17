@@ -139,14 +139,14 @@ VolumeSample.init = function() {
   bufferLoader = new BufferLoader(
     context,
     [
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
-	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
-      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media"
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/vocals.wav?alt=media",
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/vocals.wav?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/bass.wav?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/bass.wav?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/drums.wav?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/drums.wav?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/2KGe_4leh_Y/other.wav?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/output/f4zdkP11BHU/other.wav?alt=media",
     ],
     VolumeSample.finishedLoading
     );

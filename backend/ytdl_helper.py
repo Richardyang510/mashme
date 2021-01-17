@@ -49,9 +49,9 @@ def download(arg):
             requests.get(arg)
         except requests.exceptions.MissingSchema:
             metadata = ydl.extract_info(f"ytsearch:{arg}", download=True)['entries'][0]
-            return {"id": metadata["id"], "artist": metadata["artist"], "track": metadata["track"]}
+            return {"id": metadata["id"], "artist": metadata["artist"], "track": metadata["track"],
+                    "duration": metadata["duration"]}
         else:
             logging.error("Operation not supported")
             return None
             #  youtube_id = ydl.extract_info(arg, download=True)
-
