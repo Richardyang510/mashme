@@ -1,4 +1,6 @@
 from flask import Flask, escape, request
+import mysql_helper
+import json
 
 app = Flask(__name__)
 
@@ -19,11 +21,15 @@ def smooth_test():
 @app.route('/mix/<query>', methods=['POST'])
 def mix(query):
     print("The user has entered: " + query)
-    return 'hello'
+    return json.dumps([])
 
 @app.route('/cached-songs')
 def getCachedSongs():
-    pass
+    status, songList = mysql_helper.fetch_song_list()
+    if not status:
+        return json.dumps([])
+    else:
+        return json.dumps(songList)
 
 
 app.run()
