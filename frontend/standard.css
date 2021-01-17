@@ -61,60 +61,69 @@ a:hover {
 }
 
 /* dropdown CSS start */
-.dropbtn {
-  border-radius: 999px;
-  background-color: #f5f6fa;
-  border: none;
-  width: 458px;
-  color: #7f8fa6;
-  padding: 16px;
-  font-size: 16px;
-  cursor: pointer;
-}
 
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #7f8fa6;
-  color: #f5f6fa;
-}
-
-#myInput {
+* {
   box-sizing: border-box;
-  background-image: url('searchicon.png');
-  background-position: 14px 12px;
-  background-repeat: no-repeat;
-  font-size: 16px;
-  padding: 14px 20px 12px 45px;
-  border: none;
-  border-bottom: 1px solid #ddd;
 }
 
-#myInput:focus {outline: 3px solid #ddd;}
+body {
+  font: 16px Arial;
+}
 
-.dropdown {
+/*the container must be positioned relative:*/
+.autocomplete {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-content {
-  display: none;
+input {
+  border: none;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 999px;
+}
+
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type=submit] {
+  background-color: #7f8fa6;
+  color: #fff;
+  cursor: pointer;
+}
+
+.autocomplete-items {
   position: absolute;
-  background-color: #f6f6f6;
-  min-width: 230px;
-  overflow: auto;
-  border: 1px solid #ddd;
-  z-index: 1;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
 }
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+}
 
-.show {display: block;}
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: #7f8fa6 !important;
+  color: #ffffff;
+}
 
 /* dropdown CSS end*/
 
