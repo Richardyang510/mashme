@@ -74,6 +74,8 @@ def download_song(search_query):
 
     youtube_id = yt_metadata["id"]
 
+    logging.info("Found metdata for song: " + str(yt_metadata))
+
     spotify_id = SpotifyHelper.getSongId(yt_metadata["track"], yt_metadata["artist"])
     spotify_features = SpotifyHelper.getAudioFeaturesByIds([spotify_id])
 
