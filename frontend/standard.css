@@ -194,6 +194,7 @@ input:checked + .slider:before {
 #submit-button {
   background-color: #7f8fa6;
   border: none;
+  margin-top: 10px;
 }
 
 .feedback-button {
