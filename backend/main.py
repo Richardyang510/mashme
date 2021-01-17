@@ -11,6 +11,7 @@ from os.path import isfile, join, join, dirname
 import os
 from dotenv import load_dotenv
 import logging
+import urllib
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -52,15 +53,16 @@ def transform_song(song_src_yt_id, song_dst_yt_id):
 
     logging.info("Fetching transformed stems")
     _, dst_stems = mysql_helper.fetch_stems(song_dst_yt_id, src_tempo, src_key, src_is_minor)
-    output = []
+    src_output = []
+    dst_output = []
 
     for _, stem_type, bucket_name, file_name, _, _, _ in src_stems:
-        output.append((stem_type, bucket_name, file_name))
+        src_output.append((stem_type, bucket_name, file_name))
 
     for _, stem_type, bucket_name, file_name, _, _, _ in dst_stems:
-        output.append((stem_type, bucket_name, file_name))
+        dst_output.append((stem_type, bucket_name, file_name))
 
-    return output
+    return src_output, dst_output
 
 
 def download_song(search_query):
@@ -141,8 +143,35 @@ def mix(query):
         else:
             yids[i] = queries[i]
 
-    stems_info = transform_song(yids[0], yids[1])
-    return json.dumps(stems_info)
+    src_stems, dst_stems = transform_song(yids[0], yids[1])
+
+    data = [""] * 8
+
+    for stem_type, bucket_name, file_path in src_stems:
+        url = f"https://storage.googleapis.com/download/storage/v1/b/{bucket_name}" \
+                      f"/o/{urllib.parse.quote(file_path)}?alt=media"
+        if stem_type == 'vocals':
+            data[0] = url
+        elif stem_type == 'bass':
+            data[2] = url
+        elif stem_type == 'drums':
+            data[4] = url
+        else:
+            data[6] = url
+
+    for stem_type, bucket_name, file_path in dst_stems:
+        url = f"https://storage.googleapis.com/download/storage/v1/b/{bucket_name}" \
+              f"/o/{urllib.parse.quote(file_path)}?alt=media"
+        if stem_type == 'vocals':
+            data[1] = url
+        elif stem_type == 'bass':
+            data[3] = url
+        elif stem_type == 'drums':
+            data[5] = url
+        else:
+            data[7] = url
+
+    return json.dumps(data)
 
 
 @app.route('/cached-songs')
