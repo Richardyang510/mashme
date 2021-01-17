@@ -121,8 +121,18 @@ BufferLoader.prototype.load = function() {
 
 var context;
 var bufferLoader;
+var VolumeSample = {
+};
 
-function init() {
+// Gain node needs to be mutated by volume control.
+var gainNode1 = null;
+var gainNode2 = null;
+
+var muteCounter1 = 0;
+var muteCounter2 = 0;
+
+
+VolumeSample.init = function() {
   // Fix up prefixing
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   context = new AudioContext();
@@ -133,21 +143,57 @@ function init() {
       "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
       "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
     ],
-    finishedLoading
+    VolumeSample.finishedLoading
     );
 
   bufferLoader.load();
 }
 
-function finishedLoading(bufferList) {
+VolumeSample.finishedLoading = function(bufferList) {
+	console.log("Done loading!")
+  
+  if (!context.createGain) {
+    context.createGain = context.createGainNode;
+  }
+  gainNode1 = context.createGain();
+  gainNode2 = context.createGain();
+  
   // Create two sources and play them both together.
   var source1 = context.createBufferSource();
   var source2 = context.createBufferSource();
+  
   source1.buffer = bufferList[0];
   source2.buffer = bufferList[1];
-
-  source1.connect(context.destination);
-  source2.connect(context.destination);
+  
+  source1.connect(gainNode1)
+  source2.connect(gainNode2)
+  
+  gainNode1.connect(context.destination)
+  gainNode2.connect(context.destination)
+  
   source1.start(0);
   source2.start(0);
+  
+  this.source1 = source1
+  this.source2 = source2
+}
+
+VolumeSample.toggleVolume1 = function(element) {
+	console.log(muteCounter1);
+	if (muteCounter1 % 2 === 0) {
+		gainNode1.gain.value = 0;
+	} else {
+		gainNode1.gain.value = 1;
+	}
+	muteCounter1 += 1;
+}
+
+VolumeSample.toggleVolume2 = function(element) {
+	console.log(muteCounter2);
+	if (muteCounter2 % 2 === 0) {
+		gainNode2.gain.value = 0;
+	} else {
+		gainNode2.gain.value = 1;
+	}
+	muteCounter2 += 1;
 }
