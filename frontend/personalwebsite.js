@@ -247,5 +247,5 @@ var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla"
 */
 
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-autocomplete(document.getElementById("myInput"), countries);
-autocomplete(document.getElementById("myInput2"), countries);
+//autocomplete(document.getElementById("myInput"), document.getElementById("cached-songs").value.split(';'));
+//autocomplete(document.getElementById("myInput2"), document.getElementById("cached-songs").value.split(';'));
