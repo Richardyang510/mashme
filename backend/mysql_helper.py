@@ -2,6 +2,7 @@ import mysql.connector
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
+from audio_manip import minor_to_major_pitch_class
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -137,3 +138,63 @@ def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_
 
     db_cursor.execute(sql, val)
     db.commit()
+
+
+def fetch_song_list():
+    sql = "select distinct youtube_id, track_name, track_artist " \
+          f"from {STEMS_TABLE}" \
+
+    test_connection()
+    db_cursor = db.cursor()
+    db_cursor.execute(sql)
+
+    result = db_cursor.fetchall()
+
+    if len(result) == 0:
+        return False, {}
+    else:
+        data = []
+        for youtube_id, track_name, track_artist in result:
+            data.append((youtube_id, track_name, track_artist))
+        return True, data
+
+
+def fetch_song(youtube_id):
+    sql = "select youtube_id, track_name, track_artist, tempo, song_key, is_minor " \
+          f"from {STEMS_TABLE}" \
+          f"where youtube_id = {youtube_id}"
+
+    test_connection()
+    db_cursor = db.cursor()
+    db_cursor.execute(sql)
+
+    result = db_cursor.fetchall()
+
+    if len(result) == 0:
+        return False, {}
+    else:
+        for youtube_id, track_name, track_artist, tempo, song_key, is_minor in result:
+            return True, (youtube_id, track_name, track_artist, tempo, song_key, is_minor)
+
+
+def fetch_stems(youtube_id, tempo, song_key, is_minor):
+    if is_minor:
+        song_key = minor_to_major_pitch_class(song_key)
+
+    sql = "select youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration " \
+          f"from {STEMS_TABLE}" \
+          f"where youtube_id = {youtube_id} and stem_tempo = {tempo} and stem_key = {song_key}"
+
+    test_connection()
+    db_cursor = db.cursor()
+    db_cursor.execute(sql)
+
+    result = db_cursor.fetchall()
+
+    if len(result) == 0:
+        return False, {}
+    else:
+        data = []
+        for youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration in result:
+            data.append((youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration))
+        return True, data
