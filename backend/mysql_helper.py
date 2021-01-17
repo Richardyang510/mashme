@@ -19,7 +19,7 @@ SONGS_TABLE = "songs"
 STEMS_TABLE = "stems"
 
 songs_creation_sql = """
-create table SONGS (
+create table songs (
     YOUTUBE_ID NVARCHAR(16) PRIMARY KEY,
     SPOTIFY_ID NVARCHAR(22),
     CREATED_TIME TIMESTAMP(6),
@@ -32,7 +32,7 @@ create table SONGS (
 """
 
 stems_creation_sql = """
-create table STEMS (
+create table stems (
     ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     CREATED_TIME TIMESTAMP(6),
     YOUTUBE_ID NVARCHAR(16),
@@ -42,7 +42,7 @@ create table STEMS (
     STEM_DURATION FLOAT,
     BUCKET_NAME NVARCHAR(256),
     FILE_NAME NVARCHAR(256),
-    FOREIGN KEY (YOUTUBE_ID) REFERENCES SONGS(YOUTUBE_ID)
+    FOREIGN KEY (YOUTUBE_ID) REFERENCES songs(YOUTUBE_ID)
 )
 """
 
@@ -142,7 +142,7 @@ def insert_stem(youtube_id, bucket_name, stem_type, file_name, stem_tempo, stem_
 
 def fetch_song_list():
     sql = "select distinct youtube_id, track_name, track_artist " \
-          f"from {STEMS_TABLE}" \
+          f"from {SONGS_TABLE}" \
 
     test_connection()
     db_cursor = db.cursor()
