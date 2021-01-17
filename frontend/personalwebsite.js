@@ -72,12 +72,6 @@ function mix() {
     .then(data => document.getElementById("audio-links").value = data)
 }
 
-function getCachedSongs() {
-  fetch('http://34.73.177.14/api/cached-songs')
-    .then(response => response.json())
-    .then(data => document.getElementById("cached-songs").value = data)
-}
-
 function BufferLoader(context, urlList, callback) {
   this.context = context;
   this.urlList = urlList;
