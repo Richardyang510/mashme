@@ -7,11 +7,20 @@ import stem_creation_spleeter
 import gcp_storage_helper
 import audio_manip
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, join, dirname
+import os
+from dotenv import load_dotenv
+import logging
 
-BUCKET_NAME = "dropdowns-stems"
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+BUCKET_NAME = os.environ.get("GCP_BUCKET_NAME")
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
+
 
 # song_dst will be transformed to match song_src key and tempo
 def transform_song(song_src_yt_id, song_dst_yt_id):
@@ -54,10 +63,52 @@ def transform_song(song_src_yt_id, song_dst_yt_id):
     return output
 
 
+def download_song(search_query):
+    yt_metadata = ytdl_helper.download(search_query)
+
+    # get {'id': 'Ce1r05SSbwA', 'artist': 'Santana', 'track': 'Smooth'} or None
+
+    if yt_metadata is None:
+        # raise error
+        pass
+
+    youtube_id = yt_metadata["id"]
+
+    spotify_id = SpotifyHelper.getSongId(yt_metadata["track"], yt_metadata["artist"])
+    spotify_features = SpotifyHelper.getAudioFeaturesByIds([spotify_id])
+
+    tempo = spotify_features[0]["tempo"]
+    song_key = spotify_features[0]["key"]
+    is_minor = not bool(spotify_features[0]["mode"])
+
+    mysql_helper.insert_song(youtube_id, spotify_id, yt_metadata["track"], yt_metadata["artist"],
+                             tempo, song_key, is_minor)
+
+    stem_creation_spleeter.split_song(f"{youtube_id}.mp3", f"output")
+
+    stems_path = f"output/{youtube_id}/"
+
+    only_files = [f for f in listdir(stems_path) if isfile(join(stems_path, f))]
+
+    if is_minor:
+        song_key = audio_manip.minor_to_major_pitch_class(song_key)
+
+    for file in only_files:
+        stem_type = file.split(".")[0]
+        mp3_file = audio_manip.dump_wav(file)
+        file_path = stems_path + mp3_file
+        gcp_storage_helper.upload_blob(BUCKET_NAME, file_path, file_path)
+        gcp_storage_helper.post_upload(youtube_id, BUCKET_NAME, stem_type, file_path, file_path, tempo, song_key,
+                                       yt_metadata["duration"])
+
+    return youtube_id
+
+
 @app.route('/')
 def hello():
     name = request.args.get("name", "World")
     return f'Hello, {escape(name)}!'
+
 
 @app.route('/smooth-test')
 def smooth_test():
@@ -67,53 +118,25 @@ def smooth_test():
     ]
     return ','.join(urls)
 
+
 @app.route('/mix/<query>', methods=['POST'])
 def mix(query):
     print("The user has entered: " + query)
     queries = query.split(';')
-    yids = [] # youtube ids
-    for q in queries:
-        yt_metadata = ytdl_helper.download(q.replace(',', ' '))
 
-        # get {'id': 'Ce1r05SSbwA', 'artist': 'Santana', 'track': 'Smooth'} or None
+    status, songList = mysql_helper.fetch_song_list()
+    cached_yids = []
+    yids = ["", ""]
 
-        if yt_metadata is None:
-            # raise error
-            pass
+    for yid, _, _ in songList:
+        cached_yids.append(yid)
 
-        youtube_id = yt_metadata["id"]
-        yids.append(youtube_id)
+    for i in range(len(yids)):
+        if yids[i] not in cached_yids:
+            yids[i] = download_song(queries[i])
 
-        spotify_id = SpotifyHelper.getSongId(yt_metadata["track"], yt_metadata["artist"])
-        spotify_features = SpotifyHelper.getAudioFeaturesByIds([spotify_id])
-
-        tempo = spotify_features[0]["tempo"]
-        song_key = spotify_features[0]["key"]
-        is_minor = not bool(spotify_features[0]["mode"])
-
-
-        mysql_helper.insert_song(youtube_id, spotify_id, yt_metadata["track"], yt_metadata["artist"],
-                                tempo, song_key, is_minor)
-
-        stem_creation_spleeter.split_song(f"{youtube_id}.mp3", f"output")
-
-        stems_path = f"output/{youtube_id}/"
-
-        only_files = [f for f in listdir(stems_path) if isfile(join(stems_path, f))]
-
-        if is_minor:
-            song_key = audio_manip.minor_to_major_pitch_class(song_key)
-
-        for file in only_files:
-            stem_type = file.split(".")[0]
-            mp3_file = audio_manip.dump_wav(file)
-            file_path = stems_path + mp3_file
-            gcp_storage_helper.upload_blob(BUCKET_NAME, file_path, file_path)
-            gcp_storage_helper.post_upload(youtube_id, BUCKET_NAME, stem_type, file_path, file_path, tempo, song_key, yt_metadata["duration"])
-
-    stems_info = transform_song(yids)
-
-    return json.dumps(stem_type)
+    stems_info = transform_song(yids[0], yids[1])
+    return json.dumps(stems_info)
 
 
 @app.route('/cached-songs')

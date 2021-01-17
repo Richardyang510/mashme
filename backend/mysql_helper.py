@@ -162,7 +162,7 @@ def fetch_song_list():
     logging.info(f"Found {len(result)} songs!")
 
     if len(result) == 0:
-        return False, {}
+        return False, []
     else:
         data = []
         for youtube_id, track_name, track_artist in result:
