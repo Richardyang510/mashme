@@ -25,7 +25,7 @@ body {
 .container {
   max-width: 1000px;
 }
-/*
+
 .my-container {
   border: 1px solid green;
 }
@@ -37,7 +37,7 @@ body {
 .my-col {
   border: 3px dotted blue;
 }
-*/
+
 #title-row {
   padding-top: 270px;
 }
@@ -62,16 +62,19 @@ a:hover {
 
 /* dropdown CSS start */
 .dropbtn {
-  background-color: #4CAF50;
-  color: white;
+  border-radius: 999px;
+  background-color: #f5f6fa;
+  border: none;
+  width: 458px;
+  color: #7f8fa6;
   padding: 16px;
   font-size: 16px;
-  border: none;
   cursor: pointer;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #3e8e41;
+  background-color: #7f8fa6;
+  color: #f5f6fa;
 }
 
 #myInput {
