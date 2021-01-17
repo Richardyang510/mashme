@@ -49,9 +49,12 @@ function func() {
 
 function toggleSearchRow() {
   x = document.getElementById("search-row-2");
+  y = document.getElementById("mood-row");
   if (x.style.display === "none") {
     x.style.display = "block"
+    y.style.display = "none"
   } else {
     x.style.display = "none"
+    y.style.display = "block"
   }
 }
