@@ -27,10 +27,10 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
         )
     )
 
-def post_upload(youtube_id, stem_tempo, stem_type, bucket_name, source_file_name, destination_file_name, stem_key, stem_duration):
+def post_upload(youtube_id, bucket_name, stem_type, source_file_name, destination_file_name, stem_tempo, stem_key, stem_duration):
     """Updates the DB on successful upload and removes the local file"""
     # call insert command to insert a new stem
-    mysql_helper.insert_stem(youtube_id, bucket_name, stem_tempo, stem_type, destination_file_name, stem_key, stem_duration)
+    mysql_helper.insert_stem(youtube_id, bucket_name, stem_type, destination_file_name, stem_tempo, stem_key, stem_duration)
     os.remove(source_file_name)
 
 
