@@ -43,7 +43,7 @@
         <div class="row my-row">
           <div class="col-md-8 offset-md-2 my-col">
             <!--Make sure the form has the autocomplete function switched off:-->
-            <form autocomplete="off" action="/action_page.php">
+            <form autocomplete="off" onsubmit="submitQuery(event)">
               <div class="autocomplete" style="width:425px; margin-left: 100px;">
                 <input id="myInput" type="text" name="myCountry">
               </div>
@@ -54,7 +54,7 @@
         <div class="row my-row" id="search-row-2" style="display:none">
           <div class="col-md-8 offset-md-2 my-col">
             <!--Make sure the form has the autocomplete function switched off:-->
-            <form autocomplete="off" action="/action_page.php">
+            <form autocomplete="off">
               <div class="autocomplete" style="width:425px; margin-left: 100px;">
                 <input id="myInput2" type="text" name="myCountry">
               </div>
