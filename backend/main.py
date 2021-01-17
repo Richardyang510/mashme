@@ -31,6 +31,10 @@ def transform_song(song_src_yt_id, song_dst_yt_id):
     # fetch source stems
     src_stems_exist, src_stems = mysql_helper.fetch_stems(song_src_yt_id, src_tempo, src_key, src_is_minor)
 
+    if src_is_minor:
+        src_key = audio_manip.minor_to_major_pitch_class(src_key)
+        src_is_minor = False
+
     if not src_stems_exist:
         # this is a big problem lmao F
         pass
