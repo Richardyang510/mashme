@@ -25,7 +25,7 @@ body {
 .container {
   max-width: 1000px;
 }
-/*
+
 .my-container {
   border: 1px solid green;
 }
@@ -37,7 +37,7 @@ body {
 .my-col {
   border: 3px dotted blue;
 }
-*/
+
 #title-row {
   padding-top: 270px;
 }
@@ -103,8 +103,16 @@ a:hover {
   border: none;
 }
 
+#hide-button {
+  border-radius: 999px;
+  background-color: #7f8fa6;
+  border: none;
+  width: 260px;
+  margin-top: 25px;
+}
+
 #mood-row {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 /* toggle CSS */
