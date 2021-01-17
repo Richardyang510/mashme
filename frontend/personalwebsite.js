@@ -187,8 +187,9 @@ VolumeSample.toggleVolume = function(idx) {
 	}
 }
 
-function submitQuery() {
-  fetch('http://34.73.177.14/api/mix/' + document.getElementById("search-bar-1").value, {method: 'POST' })
+function submitQuery(event) {
+  event.preventDefault();
+  fetch('http://34.73.177.14/api/mix/' + document.getElementById("myInput").value + ';' + document.getElementById("myInput2").value, {method: 'POST' })
     .then(response => console.log('mix successful'))
 }
 function autocomplete(inp, arr) {
