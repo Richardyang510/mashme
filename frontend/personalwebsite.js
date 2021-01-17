@@ -71,3 +71,49 @@ function mix() {
     .then(response => response.text())
     .then(data => document.getElementById("audio-links").value = data)
 }
+
+let AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+// Stereo
+let channels = 2;
+
+function init() {
+  audioCtx = new AudioContext();
+}
+
+function playAudio() {
+  if(!audioCtx) {
+    init();
+  }
+  
+  var request = new XMLHttpRequest();
+  var url = "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media"
+  // var url = "https://storage.googleapis.com/dropdowns-stems/Smooth_133_5.mp3"
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
+
+  // Decode asynchronously
+  request.onload = function() {
+    audioCtx.decodeAudioData(request.response, function(buffer) {
+      smoothBuffer = buffer;
+	  
+	  // Get an AudioBufferSourceNode.
+	  // This is the AudioNode to use when we want to play an AudioBuffer
+	  let source = audioCtx.createBufferSource();
+	  // set the buffer in the AudioBufferSourceNode
+	  source.buffer = smoothBuffer;
+	  // connect the AudioBufferSourceNode to the
+	  // destination so we can hear the sound
+	  source.connect(audioCtx.destination);
+	  // start the source playing
+	  source.start();
+
+	  source.onended = () => {
+		console.log('White noise finished');
+	  }
+    }, function() {});
+  }
+  request.send();
+
+}
