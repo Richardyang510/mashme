@@ -10,7 +10,10 @@ def hello():
 
 @app.route('/smooth-test')
 def smooth_test():
-    urls = ['http://34.117.53.148/Smooth_133_5.mp3', 'http://34.117.53.148/Smooth_100_11.mp3']
+    urls = [
+        'https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media',
+        'https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media'
+    ]
     return ','.join(urls)
 
 app.run()
