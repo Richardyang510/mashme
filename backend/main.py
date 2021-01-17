@@ -149,7 +149,7 @@ def mix(query):
 
     for stem_type, bucket_name, file_path in src_stems:
         url = f"https://storage.googleapis.com/download/storage/v1/b/{bucket_name}" \
-                      f"/o/{urllib.parse.quote(file_path)}?alt=media"
+              f"/o/{urllib.parse.quote(urllib.parse.quote(file_path))}?alt=media"
         if stem_type == 'vocals':
             data[0] = url
         elif stem_type == 'bass':
@@ -161,7 +161,7 @@ def mix(query):
 
     for stem_type, bucket_name, file_path in dst_stems:
         url = f"https://storage.googleapis.com/download/storage/v1/b/{bucket_name}" \
-              f"/o/{urllib.parse.quote(file_path)}?alt=media"
+              f"/o/{urllib.parse.quote(urllib.parse.quote(file_path))}?alt=media"
         if stem_type == 'vocals':
             data[1] = url
         elif stem_type == 'bass':
