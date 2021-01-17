@@ -26,7 +26,10 @@
     <script>document.addEventListener('DOMContentLoaded', function() {
       fetch('http://34.73.177.14/api/cached-songs')
         .then(response => response.json())
-        .then(data => document.getElementById("cached-songs").value = data)
+        .then(data => {
+          data = data.map(song => song.join(',')).join(';')
+          document.getElementById("cached-songs").value = data
+        })
     });</script>
   </head>
   <body>
