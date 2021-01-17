@@ -30,7 +30,12 @@
           data = data.map(song => song.join(',')).join(';')
           document.getElementById("cached-songs").value = data
         })
-    });</script>
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+      var countries = document.getElementById("cached-songs").value.split(";")
+    })
+    
+  </script>
   </head>
   <body>
     <main>
