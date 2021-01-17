@@ -2,7 +2,10 @@ import requests
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
+import logging
 
+
+logging.basicConfig(level=logging.INFO)
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
@@ -21,6 +24,7 @@ class SpotifyHelper:
         Gets the id of the first song that matches the search criteria
         """
         r = requests.get(SEARCH_URL, params={'q': name or '' + ' artist:' + artist or '', 'type': 'track'}, headers=SpotifyHelper.HEADER)
+        logging.info(r)
         return r.json()['tracks']['items'][0]['id']
 
     @staticmethod

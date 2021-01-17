@@ -82,6 +82,7 @@ input {
   padding: 10px;
   font-size: 16px;
   border-radius: 999px;
+  outline: none;
 }
 
 input[type=text] {
@@ -243,6 +244,7 @@ input:checked + .slider:before {
   background-color: transparent;
   border-radius: 999px;
   color: #7f8fa6;
+  outline: none;
 }
 
 #playback-button-row {
@@ -256,6 +258,7 @@ input:checked + .slider:before {
   background-color: transparent;
   color: #7f8fa6;
   width: 70px;
+  outline: none;
 }
 
 
@@ -264,4 +267,5 @@ input:checked + .slider:before {
   background-color: #7f8fa6;
   border: none;
   width: 60px;
+  outline: none;
 }
