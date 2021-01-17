@@ -162,7 +162,7 @@ def fetch_song_list():
     logging.info(f"Found {len(result)} songs!")
 
     if len(result) == 0:
-        return False, {}
+        return False, []
     else:
         data = []
         for youtube_id, track_name, track_artist in result:
@@ -173,21 +173,26 @@ def fetch_song_list():
 
 def fetch_song(youtube_id):
     sql = "select youtube_id, track_name, track_artist, tempo, song_key, is_minor " \
-          f"from {STEMS_TABLE}" \
-          f"where youtube_id = {youtube_id}"
+          f"from {SONGS_TABLE} " \
+          "where youtube_id = %s"
 
     test_connection()
+    val = (youtube_id, )
+
+    logging.info(sql)
+    logging.info(val)
+
     db_cursor = db.cursor()
-    db_cursor.execute(sql)
+    db_cursor.execute(sql, val)
 
     result = db_cursor.fetchall()
 
     if len(result) == 0:
-        return False, {}
+        return False, None, None, None, None, None, None
     else:
         for youtube_id, track_name, track_artist, tempo, song_key, is_minor in result:
             db_cursor.close()
-            return True, (youtube_id, track_name, track_artist, tempo, song_key, is_minor)
+            return True, youtube_id, track_name, track_artist, tempo, song_key, is_minor
 
 
 def fetch_stems(youtube_id, tempo, song_key, is_minor):
@@ -195,12 +200,17 @@ def fetch_stems(youtube_id, tempo, song_key, is_minor):
         song_key = minor_to_major_pitch_class(song_key)
 
     sql = "select youtube_id, stem_type, bucket_name, file_name, stem_key, stem_tempo, stem_duration " \
-          f"from {STEMS_TABLE}" \
-          f"where youtube_id = {youtube_id} and stem_tempo = {tempo} and stem_key = {song_key}"
+          f"from {STEMS_TABLE} " \
+          "where youtube_id = %s and stem_tempo = %s and stem_key = %s"
 
     test_connection()
+    val = (youtube_id, tempo, song_key)
+
+    logging.info(sql)
+    logging.info(val)
+
     db_cursor = db.cursor()
-    db_cursor.execute(sql)
+    db_cursor.execute(sql, val)
 
     result = db_cursor.fetchall()
 
