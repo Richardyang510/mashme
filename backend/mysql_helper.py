@@ -150,6 +150,8 @@ def fetch_song_list():
 
     result = db_cursor.fetchall()
 
+    logging.info(f"Found {len(result)} songs!")
+
     if len(result) == 0:
         return False, {}
     else:
