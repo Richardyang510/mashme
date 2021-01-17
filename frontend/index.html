@@ -19,6 +19,9 @@
 
     <link rel="icon" href="pngs/masher.png">
     <title>masher</title>
+
+    <!-- Hidden fields for storage -->
+    <input type="hidden" id="audio-links" value="" />
   </head>
   <body>
     <main>
@@ -155,7 +158,7 @@
         </div>
         <div class="row my-row">
           <div class="col-md-8 offset-md-2 my-col">
-              <button class="btn btn-primary col" type="button" id="submit-button">mix</button>
+              <button class="btn btn-primary col" type="button" id="submit-button" onclick="mix()">mix</button>
           </div>
         </div>
         <div class="row my-row">

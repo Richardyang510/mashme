@@ -65,3 +65,9 @@ function toggleVocal1() {
     console.log(x)
   })
 }
+
+function mix() {
+  fetch('http://34.73.177.14/api/smooth-test')
+    .then(response => response.text())
+    .then(data => document.getElementById("audio-links").value = data)
+}
