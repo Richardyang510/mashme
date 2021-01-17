@@ -171,6 +171,7 @@ def mix(query):
         else:
             data[7] = url
 
+    logging.info(str(data))
     return json.dumps(data)
 
 
