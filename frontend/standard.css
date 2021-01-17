@@ -27,9 +27,9 @@ body {
 }
 
 .my-container {
-  border: 1px solid green;
+  border: none;
 }
-
+/*
 .my-row {
   border: 3px solid red;
 }
@@ -37,7 +37,7 @@ body {
 .my-col {
   border: 3px dotted blue;
 }
-
+*/
 #title-row {
   padding-top: 270px;
 }
@@ -139,10 +139,11 @@ input[type=submit] {
 
 #hide-button {
   border-radius: 999px;
-  background-color: #7f8fa6;
-  border: none;
+  border-width: 1px;
+  border-color: #7f8fa6;
+  background-color: transparent;
   width: 260px;
-  margin-top: 25px;
+  margin-top: 50px;
 }
 
 #mood-row {

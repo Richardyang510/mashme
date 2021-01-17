@@ -125,11 +125,10 @@ var VolumeSample = {
 };
 
 // Gain node needs to be mutated by volume control.
-var gainNode1 = null;
-var gainNode2 = null;
+var gainNodes = [null, null, null, null, null, null, null, null];
+var muteCounters = [1, 0, 0, 1, 0, 1, 0, 1];
 
-var muteCounter1 = 0;
-var muteCounter2 = 0;
+var num_tracks = 8;
 
 
 VolumeSample.init = function() {
@@ -142,6 +141,12 @@ VolumeSample.init = function() {
     [
       "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
       "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
+	  "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media"
     ],
     VolumeSample.finishedLoading
     );
@@ -155,47 +160,31 @@ VolumeSample.finishedLoading = function(bufferList) {
   if (!context.createGain) {
     context.createGain = context.createGainNode;
   }
-  gainNode1 = context.createGain();
-  gainNode2 = context.createGain();
-
-  // Create two sources and play them both together.
-  var source1 = context.createBufferSource();
-  var source2 = context.createBufferSource();
-
-  source1.buffer = bufferList[0];
-  source2.buffer = bufferList[1];
-
-  source1.connect(gainNode1)
-  source2.connect(gainNode2)
-
-  gainNode1.connect(context.destination)
-  gainNode2.connect(context.destination)
-
-  source1.start(0);
-  source2.start(0);
-
-  this.source1 = source1
-  this.source2 = source2
+  
+  var sources = [null, null, null, null, null, null, null, null];
+  
+  for (var i = 0; i < num_tracks; i++) {
+	  gainNodes[i] = context.createGain();
+	  sources[i] = context.createBufferSource();
+	  sources[i].buffer = bufferList[i];
+      sources[i].connect(gainNodes[i]);
+      gainNodes[i].connect(context.destination);
+	  if (muteCounters[i] % 2 === 0) {
+		  console.log(0 + " " + i);
+		  gainNodes[i].gain.value = 0;
+	  }
+      sources[i].start(0);
+  }
 }
 
-VolumeSample.toggleVolume1 = function(element) {
-	console.log(muteCounter1);
-	if (muteCounter1 % 2 === 0) {
-		gainNode1.gain.value = 0;
+VolumeSample.toggleVolume = function(idx) {
+	muteCounters[idx] += 1;
+	console.log(muteCounters[idx] + " " + idx);
+	if (muteCounters[idx] % 2 === 0) {
+		gainNodes[idx].gain.value = 0;
 	} else {
-		gainNode1.gain.value = 1;
+		gainNodes[idx].gain.value = 1;
 	}
-	muteCounter1 += 1;
-}
-
-VolumeSample.toggleVolume2 = function(element) {
-	console.log(muteCounter2);
-	if (muteCounter2 % 2 === 0) {
-		gainNode2.gain.value = 0;
-	} else {
-		gainNode2.gain.value = 1;
-	}
-	muteCounter2 += 1;
 }
 
 function submitQuery() {
@@ -304,3 +293,4 @@ var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla"
 
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 autocomplete(document.getElementById("myInput"), countries);
+autocomplete(document.getElementById("myInput2"), countries);
