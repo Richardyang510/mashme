@@ -72,48 +72,82 @@ function mix() {
     .then(data => document.getElementById("audio-links").value = data)
 }
 
-let AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioCtx;
-
-// Stereo
-let channels = 2;
-
-function init() {
-  audioCtx = new AudioContext();
+function BufferLoader(context, urlList, callback) {
+  this.context = context;
+  this.urlList = urlList;
+  this.onload = callback;
+  this.bufferList = new Array();
+  this.loadCount = 0;
 }
 
-function playAudio() {
-  if(!audioCtx) {
-    init();
-  }
-  
+BufferLoader.prototype.loadBuffer = function(url, index) {
+  // Load buffer asynchronously
   var request = new XMLHttpRequest();
-  var url = "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media"
-  // var url = "https://storage.googleapis.com/dropdowns-stems/Smooth_133_5.mp3"
-  request.open('GET', url, true);
-  request.responseType = 'arraybuffer';
+  request.open("GET", url, true);
+  request.responseType = "arraybuffer";
 
-  // Decode asynchronously
+  var loader = this;
+
   request.onload = function() {
-    audioCtx.decodeAudioData(request.response, function(buffer) {
-      smoothBuffer = buffer;
-	  
-	  // Get an AudioBufferSourceNode.
-	  // This is the AudioNode to use when we want to play an AudioBuffer
-	  let source = audioCtx.createBufferSource();
-	  // set the buffer in the AudioBufferSourceNode
-	  source.buffer = smoothBuffer;
-	  // connect the AudioBufferSourceNode to the
-	  // destination so we can hear the sound
-	  source.connect(audioCtx.destination);
-	  // start the source playing
-	  source.start();
-
-	  source.onended = () => {
-		console.log('White noise finished');
-	  }
-    }, function() {});
+    // Asynchronously decode the audio file data in request.response
+    loader.context.decodeAudioData(
+      request.response,
+      function(buffer) {
+        if (!buffer) {
+          alert('error decoding file data: ' + url);
+          return;
+        }
+        loader.bufferList[index] = buffer;
+        if (++loader.loadCount == loader.urlList.length)
+          loader.onload(loader.bufferList);
+      },
+      function(error) {
+        console.error('decodeAudioData error', error);
+      }
+    );
   }
-  request.send();
 
+  request.onerror = function() {
+    alert('BufferLoader: XHR error');
+  }
+
+  request.send();
+}
+
+BufferLoader.prototype.load = function() {
+  for (var i = 0; i < this.urlList.length; ++i)
+  this.loadBuffer(this.urlList[i], i);
+}
+
+var context;
+var bufferLoader;
+
+function init() {
+  // Fix up prefixing
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  context = new AudioContext();
+
+  bufferLoader = new BufferLoader(
+    context,
+    [
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_133_5.mp3?alt=media",
+      "https://storage.googleapis.com/download/storage/v1/b/dropdowns-stems/o/Smooth_100_11.mp3?alt=media",
+    ],
+    finishedLoading
+    );
+
+  bufferLoader.load();
+}
+
+function finishedLoading(bufferList) {
+  // Create two sources and play them both together.
+  var source1 = context.createBufferSource();
+  var source2 = context.createBufferSource();
+  source1.buffer = bufferList[0];
+  source2.buffer = bufferList[1];
+
+  source1.connect(context.destination);
+  source2.connect(context.destination);
+  source1.start(0);
+  source2.start(0);
 }
