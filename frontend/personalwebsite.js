@@ -199,7 +199,7 @@ VolumeSample.toggleVolume2 = function(element) {
 }
 
 function submitQuery() {
-  fetch('http://34.73.177.14/api/mix' + document.getElementById("search-bar-1").value, {method: 'POST' })
+  fetch('http://34.73.177.14/api/mix/' + document.getElementById("search-bar-1").value, {method: 'POST' })
     .then(response => console.log('mix successful'))
 }
 /* When the user clicks on the button,
