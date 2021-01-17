@@ -23,7 +23,11 @@
     <!-- Hidden fields for storage -->
     <input type="hidden" id="audio-links" value="" />
     <input type="hidden" id="cached-songs" value="" />
-    <script>document.addEventListener('onload', getCachedSongs);</script>
+    <script>document.addEventListener('onload', function() {
+      fetch('http://34.73.177.14/api/cached-songs')
+        .then(response => response.json())
+        .then(data => document.getElementById("cached-songs").value = data)
+    });</script>
   </head>
   <body>
     <main>
