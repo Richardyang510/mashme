@@ -33,8 +33,7 @@ def mix(query):
     queries = query.split(';')
 
     for q in queries:
-        title, artist = q.split(',')
-        yt_metadata = ytdl_helper.download(title + " " + artist)
+        yt_metadata = ytdl_helper.download(q.replace(',', ' '))
 
         # get {'id': 'Ce1r05SSbwA', 'artist': 'Santana', 'track': 'Smooth'} or None
 

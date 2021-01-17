@@ -20,7 +20,7 @@ class SpotifyHelper:
         """
         Gets the id of the first song that matches the search criteria
         """
-        r = requests.get(SEARCH_URL, params={'q': name + ' artist:' + artist, 'type': 'track'}, headers=SpotifyHelper.HEADER)
+        r = requests.get(SEARCH_URL, params={'q': name or '' + ' artist:' + artist or '', 'type': 'track'}, headers=SpotifyHelper.HEADER)
         return r.json()['tracks']['items'][0]['id']
 
     @staticmethod
