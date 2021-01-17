@@ -71,9 +71,9 @@ def test_connection():
     if not db.is_connected():
         logging.info("Recreating data base connection")
         db = init_connection()
-#    else:
-#        db.close()
-#        db = init_connection()
+    else:
+        db.close()
+        db = init_connection()
 
 
 def create_schemas():
