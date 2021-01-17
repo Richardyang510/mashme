@@ -58,3 +58,10 @@ function toggleSearchRow() {
     y.style.display = "block"
   }
 }
+
+function toggleVocal1() {
+  fetch('http://34.73.177.14/api/smooth-test').then(x => {
+    // x here is a list of links separated by commas
+    console.log(x)
+  })
+}
