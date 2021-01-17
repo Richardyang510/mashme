@@ -235,9 +235,12 @@ input:checked + .slider:before {
 }
 
 #submit-button {
-  background-color: #7f8fa6;
-  border: none;
   border-radius: 999px;
+  border-width: 1px;
+  border-color: #7f8fa6;
+  background-color: transparent;
+  border-radius: 999px;
+  color: #7f8fa6;
 }
 
 #playback-button-row {
@@ -246,8 +249,10 @@ input:checked + .slider:before {
 
 .playback-button {
   border-radius: 999px;
-  background-color: #7f8fa6;
-  border: none;
+  border-width: 1px;
+  border-color: #7f8fa6;
+  background-color: transparent;
+  color: #7f8fa6;
   width: 70px;
 }
 
