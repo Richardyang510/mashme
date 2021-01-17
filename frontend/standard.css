@@ -234,18 +234,6 @@ input:checked + .slider:before {
   margin-top: 50px;
 }
 
-/* play bar start */
-
-#playbar {
-  width: 636px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 999px;
-  background-color: #f5f6fa;
-}
-
-/* play bar end */
-
 #submit-button {
   background-color: #7f8fa6;
   border: none;
