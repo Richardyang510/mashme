@@ -151,29 +151,29 @@ VolumeSample.init = function() {
 
 VolumeSample.finishedLoading = function(bufferList) {
 	console.log("Done loading!")
-  
+
   if (!context.createGain) {
     context.createGain = context.createGainNode;
   }
   gainNode1 = context.createGain();
   gainNode2 = context.createGain();
-  
+
   // Create two sources and play them both together.
   var source1 = context.createBufferSource();
   var source2 = context.createBufferSource();
-  
+
   source1.buffer = bufferList[0];
   source2.buffer = bufferList[1];
-  
+
   source1.connect(gainNode1)
   source2.connect(gainNode2)
-  
+
   gainNode1.connect(context.destination)
   gainNode2.connect(context.destination)
-  
+
   source1.start(0);
   source2.start(0);
-  
+
   this.source1 = source1
   this.source2 = source2
 }
@@ -196,4 +196,26 @@ VolumeSample.toggleVolume2 = function(element) {
 		gainNode2.gain.value = 1;
 	}
 	muteCounter2 += 1;
+}
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
 }
