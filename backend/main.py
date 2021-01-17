@@ -77,9 +77,9 @@ def download_song(search_query):
     spotify_id = SpotifyHelper.getSongId(yt_metadata["track"], yt_metadata["artist"])
     spotify_features = SpotifyHelper.getAudioFeaturesByIds([spotify_id])
 
-    tempo = spotify_features[0]["tempo"]
-    song_key = spotify_features[0]["key"]
-    is_minor = not bool(spotify_features[0]["mode"])
+    tempo = spotify_features["tempo"]
+    song_key = spotify_features["key"]
+    is_minor = not bool(spotify_features["mode"])
 
     mysql_helper.insert_song(youtube_id, spotify_id, yt_metadata["track"], yt_metadata["artist"],
                              tempo, song_key, is_minor)
@@ -131,9 +131,13 @@ def mix(query):
     for yid, _, _ in songList:
         cached_yids.append(yid)
 
+    logging.info("Cached yids: " + str(cached_yids))
+
     for i in range(len(yids)):
-        if yids[i] not in cached_yids:
+        if queries[i] not in cached_yids:
             yids[i] = download_song(queries[i])
+        else:
+            yids[i] = queries[i]
 
     stems_info = transform_song(yids[0], yids[1])
     return json.dumps(stems_info)
